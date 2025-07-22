@@ -1,0 +1,75 @@
+_schema-version: "3.2"
+ID: ibs_iven
+version: 0.0.1
+modules:
+- name: ibs-iven-approuter
+  type: approuter.nodejs
+  path: ibs-iven-approuter
+  requires:
+  - name: ibs_iven_html_repo_runtime
+  - name: uaa_ibs_iven
+  - name: ibs_iven_dest
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+- name: ibs_iven_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: ibs_iven_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - react_layout-content.zip
+      name: react_layout
+      target-path: resources/
+    - artifacts:
+      - react_lay-content.zip
+      name: react_lay
+      target-path: resources/
+- name: react_layout
+  type: html5
+  path: react_layout
+  build-parameters:
+    builder: custom
+    commands:
+    - npm install
+    - npm run build
+    - find . -type d -name "node_modules" -exec rm -rf {} +
+    supported-platforms: []
+- name: react_lay
+  type: html5
+  path: react_lay
+  build-parameters:
+    builder: custom
+    commands:
+    - npm install
+    - npm run build
+    - find . -type d -name "node_modules" -exec rm -rf {} +
+    supported-platforms: []
+resources:
+- name: ibs_iven_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: uaa_ibs_iven
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: ibs_iven-xsuaa-service
+    service-plan: application
+- name: ibs_iven_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+- name: ibs_iven_dest
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite

@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run ibs_iven",
+      "type": "shell",
+      "dependsOn": "Build ibs_iven",
+      "command": "if [ ! -f ${workspaceFolder}/ibs-iven-approuter/node_modules/@sap/html5-repo-mock/index.js ] || [ ! -f ${workspaceFolder}/ibs-iven-approuter/node_modules/@sap/approuter/approuter.js ]; then npm i @sap/approuter && npm i @sap/html5-repo-mock; fi",
+      "options": {
+        "cwd": "${workspaceFolder}/ibs-iven-approuter"
+      }
+    },
+    {
+      "label": "Build ibs_iven",
+      "type": "shell",
+      "command": "if [ ! -d ${workspaceFolder}/react_layout/build ]; then npm run build-react_layout; fi",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    }
+  ]
+}

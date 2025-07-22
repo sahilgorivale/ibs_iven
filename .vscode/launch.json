@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run ibs_iven-react_layout",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/ibs-iven-approuter/node_modules/@sap/html5-repo-mock/index.js",
+      "args": [
+        "--standalone",
+        "/react_layout/index.html"
+      ],
+      "cwd": "${workspaceFolder}/react_layout/build",
+      "env": {
+        "PORT": "6004",
+        "run.config": "{\"handlerId\":\"html5_run_config_handler_id\",\"runnableId\":\"/home/user/projects/ibs_iven/react_layout\"}"
+      },
+      "envFile": "${workspaceFolder}/react_layout/.env1",
+      "preLaunchTask": "Run ibs_iven"
+    }
+  ]
+}
